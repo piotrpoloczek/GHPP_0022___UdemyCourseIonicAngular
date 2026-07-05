@@ -1,27 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { PersonsService } from './persons.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-persons',
   templateUrl: './persons.component.html'
 })
 export class PersonsComponent implements OnInit, OnDestroy {
-  personList: string[] = [];
-  isFetching = false;
-  private personListSub: Subscription = new Subscription;
+  personList: string[];
+  private personListSubs: Subscription;
+  // private personService: PersonsService;
 
   constructor(private prsService: PersonsService) {
     // this.personList = prsService.persons;
+    // this.personService = prsService;
   }
 
   ngOnInit() {
-    this.prsService.personsChanged.subscribe(persons => {
+    this.personListSubs = this.prsService.personsChanged.subscribe(persons => {
       this.personList = persons;
-      this.isFetching = false;
     });
-    this.isFetching = true;
     this.prsService.fetchPersons();
   }
 
@@ -30,6 +29,6 @@ export class PersonsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.personListSub.unsubscribe();
+    this.personListSubs.unsubscribe();
   }
 }
