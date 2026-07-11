@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { OfferPage } from './offer.page';
 
@@ -10,24 +10,29 @@ const routes: Routes = [
   },
   {
     path: 'new-offer',
-    loadChildren: () => import('./new-offer/new-offer.module').then( m => m.NewOfferPageModule)
-  },
-  {
-    path: 'edit',
-    loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
+    loadChildren: () =>
+      import('./new-offer/new-offer.module').then(
+        m => m.NewOfferPageModule
+      )
   },
   {
     path: 'edit-offer',
-    loadChildren: () => import('./edit-offer/edit-offer.module').then( m => m.EditOfferPageModule)
+    loadChildren: () =>
+      import('./edit-offer/edit-offer.module').then(
+        m => m.EditOfferPageModule
+      )
   },
   {
     path: 'place-bookings',
-    loadChildren: () => import('./place-bookings/place-bookings.module').then( m => m.PlaceBookingsPageModule)
+    loadChildren: () =>
+      import('./place-bookings/place-bookings.module').then(
+        m => m.PlaceBookingsPageModule
+      )
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class OfferPageRoutingModule {}

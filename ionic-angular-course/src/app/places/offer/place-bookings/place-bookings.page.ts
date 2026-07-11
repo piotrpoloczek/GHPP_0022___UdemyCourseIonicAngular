@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-place-bookings',
   templateUrl: './place-bookings.page.html',
   styleUrls: ['./place-bookings.page.scss'],
+  standalone: false,
 })
 export class PlaceBookingsPage implements OnInit {
 
