@@ -78,3 +78,5 @@ Desktop.ini
 
 # Misc
 .sass-cache/
+
+.claude/
