@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { ModalController, NavController } from '@ionic/angular';
+
+import { PlacesService } from '../../places.service';
+import { CreateBookingComponent } from '../../../bookings/create-booking/create-booking.component';
+import { Place } from '../../place.model';
 
 @Component({
   selector: 'app-place-detail',
@@ -8,13 +12,51 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./place-detail.page.scss']
 })
 export class PlaceDetailPage implements OnInit {
-  constructor(private router: Router, private navCtrl: NavController) {}
+  place?: Place;
 
-  ngOnInit() {}
+  constructor(
+    private navCtrl: NavController,
+    private placesService: PlacesService,
+    private modalCtrl: ModalController,
+    private route: ActivatedRoute
+  ) {}
 
-  onBookPlace() {
-    // this.router.navigateByUrl('/places/tabs/discover');
-    this.navCtrl.navigateBack('/places/tabs/discover');
-    // this.navCtrl.pop();
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(paramMap => {
+      const placeId = paramMap.get('placeId');
+
+      if (!placeId) {
+        this.navCtrl.navigateBack('/places/tabs/discover');
+        return;
+      }
+
+      const fetchedPlace = this.placesService.getPlace(placeId);
+
+      if (!fetchedPlace) {
+        this.navCtrl.navigateBack('/places/tabs/discover');
+        return;
+      }
+
+      this.place = fetchedPlace as Place;
+    });
+  }
+
+  async onBookPlace(): Promise<void> {
+    if (!this.place) {
+      return;
+    }
+
+    const modal = await this.modalCtrl.create({
+      component: CreateBookingComponent,
+      componentProps: {
+        selectedPlace: this.place
+      }
+    });
+
+    await modal.present();
+
+    const resultData = await modal.onDidDismiss();
+
+    console.log(resultData.data, resultData.role);
   }
 }
