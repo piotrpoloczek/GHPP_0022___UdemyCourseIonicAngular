@@ -1,77 +1,590 @@
-// Ionic Variables and Theming. For more info, please see:
-// http://ionicframework.com/docs/theming/
+/* src/global.scss
+ *
+ * Global rounded Ionic styling.
+ * Add this AFTER the standard Ionic CSS imports.
+ * It applies automatically — no extra classes are required on normal components.
+ */
 
-/** Ionic CSS Variables **/
+/* =========================================================
+   Global design tokens
+   ========================================================= */
 :root {
-  /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
-  --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --app-primary: #125fb7;
+  --app-primary-dark: #093d78;
+  --app-primary-soft: #e5f0ff;
 
-  /** secondary **/
-  --ion-color-secondary: #0cd1e8;
-  --ion-color-secondary-rgb: 12, 209, 232;
-  --ion-color-secondary-contrast: #ffffff;
-  --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #0bb8cc;
-  --ion-color-secondary-tint: #24d6ea;
+  --app-secondary: #006f7a;
+  --app-secondary-soft: #e3f6f7;
 
-  /** tertiary **/
-  --ion-color-tertiary: #7044ff;
-  --ion-color-tertiary-rgb: 112, 68, 255;
-  --ion-color-tertiary-contrast: #ffffff;
-  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #633ce0;
-  --ion-color-tertiary-tint: #7e57ff;
+  --app-background: #f4f7fb;
+  --app-surface: #ffffff;
+  --app-surface-muted: #eef2f7;
 
-  /** success **/
-  --ion-color-success: #10dc60;
-  --ion-color-success-rgb: 16, 220, 96;
-  --ion-color-success-contrast: #ffffff;
-  --ion-color-success-contrast-rgb: 255, 255, 255;
-  --ion-color-success-shade: #0ec254;
-  --ion-color-success-tint: #28e070;
+  --app-text: #273142;
+  --app-text-secondary: #46546a;
+  --app-text-muted: #5b677a;
 
-  /** warning **/
-  --ion-color-warning: #ffce00;
-  --ion-color-warning-rgb: 255, 206, 0;
-  --ion-color-warning-contrast: #ffffff;
-  --ion-color-warning-contrast-rgb: 255, 255, 255;
-  --ion-color-warning-shade: #e0b500;
-  --ion-color-warning-tint: #ffd31a;
+  --app-border: #d9e1eb;
+  --app-border-strong: #aab6c5;
 
-  /** danger **/
-  --ion-color-danger: #f04141;
-  --ion-color-danger-rgb: 245, 61, 61;
-  --ion-color-danger-contrast: #ffffff;
-  --ion-color-danger-contrast-rgb: 255, 255, 255;
-  --ion-color-danger-shade: #d33939;
-  --ion-color-danger-tint: #f25454;
+  --app-success: #18794e;
+  --app-warning: #9a6200;
+  --app-danger: #b42318;
 
-  /** dark **/
-  --ion-color-dark: #222428;
-  --ion-color-dark-rgb: 34, 34, 34;
-  --ion-color-dark-contrast: #ffffff;
-  --ion-color-dark-contrast-rgb: 255, 255, 255;
-  --ion-color-dark-shade: #1e2023;
-  --ion-color-dark-tint: #383a3e;
+  --app-radius-small: 12px;
+  --app-radius: 16px;
+  --app-radius-large: 22px;
+  --app-radius-modal: 28px;
+  --app-radius-pill: 999px;
 
-  /** medium **/
-  --ion-color-medium: #989aa2;
-  --ion-color-medium-rgb: 152, 154, 162;
-  --ion-color-medium-contrast: #ffffff;
-  --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #86888f;
-  --ion-color-medium-tint: #a2a4ab;
+  --app-shadow-small:
+    0 2px 8px rgba(39, 49, 66, 0.06),
+    0 1px 2px rgba(39, 49, 66, 0.04);
 
-  /** light **/
-  --ion-color-light: #f4f5f8;
-  --ion-color-light-rgb: 244, 244, 244;
-  --ion-color-light-contrast: #000000;
-  --ion-color-light-contrast-rgb: 0, 0, 0;
-  --ion-color-light-shade: #d7d8da;
-  --ion-color-light-tint: #f5f6f9;
+  --app-shadow:
+    0 10px 30px rgba(39, 49, 66, 0.09),
+    0 3px 8px rgba(39, 49, 66, 0.05);
+
+  --app-shadow-large:
+    0 20px 50px rgba(39, 49, 66, 0.14),
+    0 6px 14px rgba(39, 49, 66, 0.06);
+
+  --app-focus-ring: 0 0 0 4px rgba(18, 95, 183, 0.2);
+}
+
+/* =========================================================
+   Application shell
+   ========================================================= */
+html,
+body,
+ion-app,
+ion-router-outlet {
+  background: var(--app-background);
+  color: var(--app-text);
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+ion-content {
+  --background: var(--app-background);
+  --color: var(--app-text);
+}
+
+/* Give every page consistent spacing automatically. */
+ion-content::part(scroll) {
+  padding:
+    var(--padding-top, 16px)
+    var(--padding-end, 16px)
+    var(--padding-bottom, 24px)
+    var(--padding-start, 16px);
+}
+
+@media (min-width: 768px) {
+  ion-content::part(scroll) {
+    padding:
+      var(--padding-top, 24px)
+      var(--padding-end, 24px)
+      var(--padding-bottom, 32px)
+      var(--padding-start, 24px);
+  }
+}
+
+/* =========================================================
+   Header and toolbar
+   ========================================================= */
+ion-header {
+  box-shadow: none;
+}
+
+ion-header::after {
+  display: none;
+}
+
+ion-toolbar {
+  --background: rgba(255, 255, 255, 0.96);
+  --color: var(--app-text);
+  --border-color: var(--app-border);
+  --min-height: 64px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+
+  border-bottom: 1px solid var(--app-border);
+  backdrop-filter: blur(16px);
+}
+
+ion-title {
+  font-size: 1.125rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+/* =========================================================
+   Cards
+   ========================================================= */
+ion-card {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+
+  margin: 0 0 16px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-large);
+  box-shadow: var(--app-shadow-small);
+  overflow: hidden;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+ion-card:hover {
+  border-color: var(--app-border-strong);
+  box-shadow: var(--app-shadow);
+}
+
+ion-card:active {
+  transform: scale(0.995);
+}
+
+ion-card-header {
+  padding: 20px 20px 8px;
+}
+
+ion-card-content {
+  padding: 12px 20px 20px;
+  color: var(--app-text-secondary);
+  line-height: 1.55;
+}
+
+ion-card-title {
+  color: var(--app-text);
+  font-size: 1.125rem;
+  font-weight: 750;
+}
+
+ion-card-subtitle {
+  margin-bottom: 6px;
+  color: var(--app-text-muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+}
+
+/* =========================================================
+   Lists and items
+   ========================================================= */
+ion-list {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  background: transparent;
+}
+
+ion-item {
+  --background: var(--app-surface);
+  --background-hover: #f9fbfd;
+  --background-activated: var(--app-surface-muted);
+  --color: var(--app-text);
+  --border-color: transparent;
+  --inner-border-width: 0;
+  --padding-start: 16px;
+  --inner-padding-end: 14px;
+  --min-height: 58px;
+  --border-radius: var(--app-radius);
+
+  margin-bottom: 10px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow-small);
+  overflow: hidden;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+ion-item:hover {
+  border-color: var(--app-border-strong);
+}
+
+ion-item.item-has-focus,
+ion-item:focus-within {
+  --border-color: var(--app-primary);
+  border-color: var(--app-primary);
+  box-shadow: var(--app-focus-ring);
+}
+
+ion-item.ion-invalid.ion-touched {
+  --border-color: var(--app-danger);
+  border-color: var(--app-danger);
+  box-shadow: 0 0 0 4px rgba(180, 35, 24, 0.12);
+}
+
+ion-item-divider {
+  --background: transparent;
+  --color: var(--app-text-secondary);
+  --padding-start: 4px;
+
+  min-height: 36px;
+  margin: 14px 0 6px;
+  border: 0;
+  box-shadow: none;
+  font-weight: 750;
+}
+
+/* Keep menu items clean but still rounded. */
+ion-menu ion-item {
+  --background: transparent;
+  margin: 4px 8px;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+ion-menu ion-item.ion-activated,
+ion-menu ion-item.router-link-active {
+  --background: var(--app-primary-soft);
+  --color: var(--app-primary-dark);
+}
+
+/* =========================================================
+   Inputs, textareas and selects
+   ========================================================= */
+ion-input,
+ion-textarea,
+ion-select {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  --placeholder-color: var(--app-text-muted);
+  --placeholder-opacity: 1;
+  --border-color: var(--app-border-strong);
+  --border-radius: var(--app-radius);
+  --highlight-color-focused: var(--app-primary);
+  --highlight-color-valid: var(--app-success);
+  --highlight-color-invalid: var(--app-danger);
+}
+
+/* Standalone modern Ionic inputs. */
+ion-input:not(ion-item ion-input),
+ion-textarea:not(ion-item ion-textarea),
+ion-select:not(ion-item ion-select) {
+  margin-bottom: 16px;
+  border: 1px solid var(--app-border-strong);
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow-small);
+  overflow: hidden;
+}
+
+ion-input:not(ion-item ion-input):focus-within,
+ion-textarea:not(ion-item ion-textarea):focus-within,
+ion-select:not(ion-item ion-select):focus-within {
+  border-color: var(--app-primary);
+  box-shadow: var(--app-focus-ring);
+}
+
+ion-label {
+  color: var(--app-text-secondary);
+  font-weight: 650;
+}
+
+ion-note {
+  color: var(--app-text-muted);
+}
+
+/* =========================================================
+   Searchbar
+   ========================================================= */
+ion-searchbar {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  --placeholder-color: var(--app-text-muted);
+  --icon-color: var(--app-text-muted);
+  --clear-button-color: var(--app-text-muted);
+  --border-radius: var(--app-radius);
+  --box-shadow: var(--app-shadow-small);
+
+  padding-inline: 0;
+  margin-bottom: 16px;
+}
+
+/* =========================================================
+   Buttons and floating buttons
+   ========================================================= */
+ion-button {
+  --border-radius: var(--app-radius);
+  --box-shadow: none;
+  --padding-start: 20px;
+  --padding-end: 20px;
+
+  min-height: 46px;
+  font-weight: 750;
+  letter-spacing: 0;
+  text-transform: none;
+  transition:
+    transform 160ms ease,
+    filter 160ms ease;
+}
+
+ion-button.button-solid {
+  --box-shadow:
+    0 5px 14px rgba(18, 95, 183, 0.19),
+    0 2px 4px rgba(18, 95, 183, 0.1);
+}
+
+ion-button.button-outline {
+  --border-width: 1px;
+}
+
+ion-button:hover {
+  filter: brightness(0.98);
+}
+
+ion-button:active {
+  transform: scale(0.985);
+}
+
+ion-button:focus-visible {
+  outline: 3px solid var(--app-text);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #ffdd00;
+}
+
+ion-fab-button {
+  --border-radius: var(--app-radius);
+  --box-shadow: var(--app-shadow);
+
+  width: 56px;
+  height: 56px;
+}
+
+/* =========================================================
+   Segments
+   ========================================================= */
+ion-segment {
+  --background: var(--app-surface-muted);
+
+  padding: 5px;
+  margin-bottom: 16px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-large);
+}
+
+ion-segment-button {
+  --color: var(--app-text-secondary);
+  --color-checked: var(--app-primary-dark);
+  --indicator-color: var(--app-surface);
+  --indicator-box-shadow: var(--app-shadow-small);
+  --border-radius: var(--app-radius);
+
+  min-height: 42px;
+  font-weight: 750;
+  text-transform: none;
+}
+
+/* =========================================================
+   Chips and badges
+   ========================================================= */
+ion-chip {
+  --background: var(--app-surface-muted);
+  --color: var(--app-text-secondary);
+
+  min-height: 34px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-pill);
+  font-weight: 700;
+}
+
+ion-chip[color="primary"] {
+  --background: var(--app-primary-soft);
+  --color: var(--app-primary-dark);
+  border-color: rgba(18, 95, 183, 0.22);
+}
+
+ion-badge {
+  border-radius: var(--app-radius-pill);
+  padding: 6px 9px;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+/* =========================================================
+   Tabs
+   ========================================================= */
+ion-tabs {
+  background: var(--app-background);
+}
+
+ion-tab-bar {
+  --background: rgba(255, 255, 255, 0.97);
+  --border: 0;
+  --color: var(--app-text-muted);
+  --color-selected: var(--app-primary);
+
+  min-height: 68px;
+  margin:
+    0
+    12px
+    max(10px, env(safe-area-inset-bottom));
+  padding: 6px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-large);
+  box-shadow: var(--app-shadow);
+  backdrop-filter: blur(18px);
+  overflow: hidden;
+}
+
+ion-tab-button {
+  --background: transparent;
+  --color: var(--app-text-muted);
+  --color-selected: var(--app-primary);
+  --ripple-color: rgba(18, 95, 183, 0.12);
+
+  margin: 0 2px;
+  border-radius: var(--app-radius);
+  font-weight: 700;
+}
+
+ion-tab-button.tab-selected {
+  --background: var(--app-primary-soft);
+}
+
+/* =========================================================
+   Accordions
+   ========================================================= */
+ion-accordion-group {
+  display: grid;
+  gap: 10px;
+}
+
+ion-accordion {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-large);
+  box-shadow: var(--app-shadow-small);
+  overflow: hidden;
+}
+
+ion-accordion ion-item[slot="header"] {
+  --background: var(--app-surface);
+  --inner-border-width: 0;
+
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+/* =========================================================
+   Selection controls
+   ========================================================= */
+ion-checkbox {
+  --border-radius: 6px;
+  --border-color: var(--app-border-strong);
+  --border-color-checked: var(--app-primary);
+  --checkbox-background-checked: var(--app-primary);
+}
+
+ion-radio {
+  --color: var(--app-border-strong);
+  --color-checked: var(--app-primary);
+}
+
+ion-toggle {
+  --track-background: var(--app-border-strong);
+  --track-background-checked: var(--app-primary);
+}
+
+/* =========================================================
+   Modal, popover and overlays
+   ========================================================= */
+ion-modal {
+  --background: var(--app-surface);
+  --border-radius: var(--app-radius-modal);
+  --box-shadow: var(--app-shadow-large);
+}
+
+ion-modal::part(content) {
+  border-radius: var(--app-radius-modal);
+  overflow: hidden;
+}
+
+ion-popover {
+  --background: var(--app-surface);
+  --box-shadow: var(--app-shadow-large);
+}
+
+ion-popover::part(content) {
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-large);
+  overflow: hidden;
+}
+
+ion-alert .alert-wrapper {
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-large);
+  box-shadow: var(--app-shadow-large);
+}
+
+ion-alert .alert-button {
+  border-radius: var(--app-radius-small);
+  font-weight: 750;
+  text-transform: none;
+}
+
+ion-action-sheet .action-sheet-group {
+  margin: 8px 10px;
+  border-radius: var(--app-radius-large);
+  overflow: hidden;
+}
+
+ion-toast {
+  --border-radius: var(--app-radius);
+  --box-shadow: var(--app-shadow-large);
+}
+
+ion-loading .loading-wrapper {
+  border-radius: var(--app-radius-large);
+  box-shadow: var(--app-shadow-large);
+}
+
+/* =========================================================
+   Skeletons, progress and range
+   ========================================================= */
+ion-skeleton-text {
+  border-radius: var(--app-radius-small);
+}
+
+ion-progress-bar {
+  border-radius: var(--app-radius-pill);
+  overflow: hidden;
+}
+
+ion-range {
+  --bar-border-radius: var(--app-radius-pill);
+  --knob-border-radius: 50%;
+}
+
+/* =========================================================
+   Accessibility
+   ========================================================= */
+:where(
+  button,
+  [href],
+  input,
+  select,
+  textarea,
+  [tabindex]:not([tabindex="-1"])
+):focus-visible {
+  outline: 3px solid var(--app-text);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
