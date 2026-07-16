@@ -1,0 +1,51 @@
+<div class="knob-wrapper" [class.is-disabled]="disabled">
+  <p class="knob-label">{{ label }}</p>
+
+  <div
+    class="knob-shell"
+    role="slider"
+    tabindex="0"
+    [attr.aria-label]="label"
+    [attr.aria-valuemin]="min"
+    [attr.aria-valuemax]="max"
+    [attr.aria-valuenow]="value"
+    [attr.aria-valuetext]="value + ' ' + unit"
+    [attr.aria-disabled]="disabled || null"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerUp()"
+    (pointercancel)="onPointerCancel()"
+    (keydown)="onKeyDown($event)"
+  >
+    <div class="knob-dial" [style.transform]="'rotate(' + rotation + 'deg)'">
+      <span class="knob-indicator"></span>
+    </div>
+
+    <div class="knob-center-overlay" aria-hidden="true">
+      <span class="knob-value">{{ displayValue }}</span>
+      <span class="knob-unit">{{ unit }}</span>
+    </div>
+  </div>
+
+  <div class="knob-buttons">
+    <button
+      type="button"
+      class="knob-btn"
+      [attr.aria-label]="'Decrease ' + label"
+      [disabled]="disabled || value <= min"
+      (click)="decrease()"
+    >
+      <ion-icon name="remove-outline" aria-hidden="true"></ion-icon>
+    </button>
+
+    <button
+      type="button"
+      class="knob-btn"
+      [attr.aria-label]="'Increase ' + label"
+      [disabled]="disabled || value >= max"
+      (click)="increase()"
+    >
+      <ion-icon name="add-outline" aria-hidden="true"></ion-icon>
+    </button>
+  </div>
+</div>

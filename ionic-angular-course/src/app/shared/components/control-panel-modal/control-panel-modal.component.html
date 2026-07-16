@@ -1,0 +1,53 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Device Controls</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button aria-label="Close device controls" (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="modal-layout">
+    <div class="modal-heading">
+      <h2>Intensity</h2>
+      <p>Adjust the device output level.</p>
+    </div>
+
+    <app-control-knob
+      label="Intensity"
+      unit="%"
+      [min]="0"
+      [max]="100"
+      [step]="1"
+      [value]="intensity"
+      [disabled]="!enabled"
+      (valueChange)="onIntensityChange($event)"
+    ></app-control-knob>
+
+    <ion-item lines="none" class="enable-control">
+      <ion-label>
+        <h3>Output enabled</h3>
+        <p>Allow intensity adjustment</p>
+      </ion-label>
+
+      <ion-toggle
+        slot="end"
+        [checked]="enabled"
+        (ionChange)="enabled = $event.detail.checked"
+      ></ion-toggle>
+    </ion-item>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <div class="modal-actions">
+      <ion-button fill="clear" color="medium" (click)="cancel()">Cancel</ion-button>
+      <ion-button (click)="apply()">Apply</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

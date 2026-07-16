@@ -1,0 +1,178 @@
+:host {
+  display: block;
+}
+
+.knob-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  &.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}
+
+.knob-label {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--app-text-secondary, var(--ion-text-color, #46546a));
+}
+
+.knob-shell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--app-background, var(--ion-background-color, #f4f7fb));
+  box-shadow:
+    8px 8px 20px rgba(39, 49, 66, 0.18),
+    -8px -8px 20px rgba(255, 255, 255, 0.75);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  outline: none;
+
+  &:focus-visible {
+    box-shadow:
+      8px 8px 20px rgba(39, 49, 66, 0.18),
+      -8px -8px 20px rgba(255, 255, 255, 0.75),
+      var(--app-focus-ring, 0 0 0 4px rgba(18, 95, 183, 0.25));
+  }
+}
+
+.knob-dial {
+  position: absolute;
+  width: 126px;
+  height: 126px;
+  border-radius: 50%;
+  background: var(--app-background, var(--ion-background-color, #f4f7fb));
+  box-shadow:
+    inset 4px 4px 10px rgba(39, 49, 66, 0.16),
+    inset -4px -4px 10px rgba(255, 255, 255, 0.72);
+  pointer-events: none;
+  transition: transform 60ms linear;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.knob-indicator {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 18px;
+  border-radius: 3px;
+  background: var(--app-primary, var(--ion-color-primary, #125fb7));
+  box-shadow: 0 2px 6px rgba(18, 95, 183, 0.45);
+}
+
+.knob-center-overlay {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--app-surface, #ffffff);
+  box-shadow:
+    4px 4px 10px rgba(39, 49, 66, 0.12),
+    -4px -4px 10px rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.knob-value {
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--app-text, var(--ion-text-color, #273142));
+}
+
+.knob-unit {
+  margin-top: 2px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--app-text-muted, #5b677a);
+}
+
+.knob-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.knob-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: var(--app-background, var(--ion-background-color, #f4f7fb));
+  color: var(--app-primary, var(--ion-color-primary, #125fb7));
+  font-size: 1.25rem;
+  cursor: pointer;
+  box-shadow:
+    4px 4px 10px rgba(39, 49, 66, 0.14),
+    -4px -4px 10px rgba(255, 255, 255, 0.72);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+
+  &:not(:disabled):hover {
+    box-shadow:
+      5px 5px 14px rgba(39, 49, 66, 0.18),
+      -5px -5px 14px rgba(255, 255, 255, 0.8);
+  }
+
+  &:not(:disabled):active {
+    transform: scale(0.93);
+    box-shadow:
+      inset 3px 3px 7px rgba(39, 49, 66, 0.16),
+      inset -3px -3px 7px rgba(255, 255, 255, 0.7);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--app-text, #273142);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+@media (max-width: 375px) {
+  .knob-shell {
+    width: 152px;
+    height: 152px;
+  }
+
+  .knob-dial {
+    width: 106px;
+    height: 106px;
+  }
+
+  .knob-center-overlay {
+    width: 62px;
+    height: 62px;
+  }
+}

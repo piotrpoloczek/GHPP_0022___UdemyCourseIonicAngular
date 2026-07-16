@@ -1,0 +1,75 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+ion-header,
+ion-footer {
+  background: transparent;
+}
+
+ion-toolbar {
+  --background: var(--ion-card-background, var(--ion-background-color, #ffffff));
+}
+
+ion-content {
+  --background: var(--ion-card-background, var(--ion-background-color, #ffffff));
+}
+
+.modal-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+}
+
+.modal-heading {
+  width: 100%;
+  text-align: center;
+}
+
+.modal-heading h2 {
+  margin: 0 0 6px;
+  color: var(--ion-text-color);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.modal-heading p {
+  margin: 0;
+  color: var(--ion-color-medium);
+  font-size: 14px;
+}
+
+.enable-control {
+  width: 100%;
+  max-width: 360px;
+
+  --padding-start: 16px;
+  --inner-padding-end: 12px;
+  --background: rgba(0, 0, 0, 0.04);
+  --border-radius: var(--app-radius, 18px);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 16px max(8px, env(safe-area-inset-bottom));
+}
+
+@media (max-width: 420px) {
+  .modal-layout {
+    gap: 18px;
+    padding: 20px 16px;
+  }
+
+  .modal-actions {
+    justify-content: stretch;
+  }
+
+  .modal-actions ion-button {
+    flex: 1;
+  }
+}
