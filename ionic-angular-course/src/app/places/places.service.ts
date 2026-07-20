@@ -4,6 +4,7 @@ import { take, map, tap, delay } from 'rxjs/operators';
 
 import { Place } from './place.model';
 import { AuthService } from '../auth/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,7 @@ export class PlacesService {
     return this._places.asObservable();
   }
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private http: HttpClient) {}
 
   getPlace(id: string) {
     return this.places.pipe(
@@ -74,13 +75,25 @@ export class PlacesService {
       dateTo,
       this.authService.userId
     );
-    return this.places.pipe(
-      take(1),
-      delay(1000),
-      tap(places => {
-        this._places.next(places.concat(newPlace));
-      })
-    );
+
+    return this.http.post(
+      'https://fbpp-0002---ionicangularcourse-default-rtdb.europe-west1.firebasedatabase.app/offered-places.json',
+      {
+        ...newPlace,
+        id: null
+      }
+    )
+    .pipe(tap(respData => {
+      console.log(respData);
+    }))
+
+    // return this.places.pipe(
+    //   take(1),
+    //   delay(1000),
+    //   tap(places => {
+    //     this._places.next(places.concat(newPlace));
+    //   })
+    // );
   }
 
   updatePlace(placeId: string, title: string, description: string) {
