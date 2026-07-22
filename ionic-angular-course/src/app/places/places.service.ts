@@ -148,12 +148,11 @@ export class PlacesService {
   }
 
   updatePlace(placeId: string, title: string, description: string) {
-    return this.places.pipe(
-      take(1),
-      delay(1000),
-      tap(places => {
+    let updatedPlaces: Place[];
+    this.places.pipe(
+      take(1), switchMap(places => {
         const updatedPlaceIndex = places.findIndex(pl => pl.id === placeId);
-        const updatedPlaces = [...places];
+        updatedPlaces = [...places];
         const oldPlace = updatedPlaces[updatedPlaceIndex];
         updatedPlaces[updatedPlaceIndex] = new Place(
           oldPlace.id,
@@ -165,8 +164,16 @@ export class PlacesService {
           oldPlace.availableTo,
           oldPlace.userId
         );
+        return this.http.put(
+          `https://fbpp-0002---ionicangularcourse-default-rtdb.europe-west1.firebasedatabase.app/offered-places/${placeId}.json`,
+          {
+            ...updatedPlaces[updatedPlaceIndex],
+            id: null
+          }
+        );
+      }), tap(() => {
         this._places.next(updatedPlaces);
       })
-    );
+    )
   }
 }
