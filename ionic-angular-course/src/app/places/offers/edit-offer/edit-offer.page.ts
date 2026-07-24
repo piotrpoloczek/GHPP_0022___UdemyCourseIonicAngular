@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController, AlertController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -24,7 +24,8 @@ export class EditOfferPage implements OnInit, OnDestroy {
     private placesService: PlacesService,
     private navCtrl: NavController,
     private router: Router,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -50,6 +51,20 @@ export class EditOfferPage implements OnInit, OnDestroy {
             })
           });
           this.isLoading = false;
+        }, error => {
+          this.alertCtrl.create({
+            header: 'An error occurred!',
+            message: 'Place could not be fetched. Please try again later.',
+            buttons: [
+              {
+                text: 'Okay',
+                handler: () => {
+                  this.router.navigate(['/places/tabs/offers']);
+                }}
+            ]
+          }).then(alertEl => {
+            alertEl.present();
+          })
         });
     });
   }
