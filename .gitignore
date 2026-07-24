@@ -80,3 +80,11 @@ Desktop.ini
 .sass-cache/
 
 .claude/
+
+# Angular environment files
+**/src/environments/environment.ts
+**/src/environments/environment.prod.ts
+**/src/environments/environment.local.ts
+
+# Angular environment files
+**/src/environments/environment*.ts
