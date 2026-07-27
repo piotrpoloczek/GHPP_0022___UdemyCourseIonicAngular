@@ -113,6 +113,10 @@ export class PlacesService {
     )
   }
 
+  uploadImage(image: File) {
+    
+  }
+
   addPlace(
     title: string,
     description: string,
