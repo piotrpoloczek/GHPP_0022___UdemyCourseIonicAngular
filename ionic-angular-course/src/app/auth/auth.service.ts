@@ -52,7 +52,7 @@ export class AuthService {
     return this.http
       .post<AuthResponseData>(
         `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${
-          environment.firebaseApiKey
+          environment.firebaseAPIKey
         }`,
         { email: email, password: password, returnSecureToken: true }
       )
@@ -63,7 +63,7 @@ export class AuthService {
     return this.http
       .post<AuthResponseData>(
         `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${
-          environment.firebaseApiKey
+          environment.firebaseAPIKey
         }`,
         { email: email, password: password }
       )

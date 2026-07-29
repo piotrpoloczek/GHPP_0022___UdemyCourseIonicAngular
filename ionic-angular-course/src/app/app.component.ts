@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Platform } from '@ionic/angular';
+import { Plugins, Capacitor } from '@capacitor/core';
 
 import { AuthService } from './auth/auth.service';
-import { Capacitor, Plugins } from '@capacitor/core';
 
 @Component({
   selector: 'app-root',
