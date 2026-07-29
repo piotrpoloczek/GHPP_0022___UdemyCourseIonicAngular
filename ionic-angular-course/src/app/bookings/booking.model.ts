@@ -9,6 +9,6 @@ export class Booking {
     public lastName: string,
     public guestNumber: number,
     public bookedFrom: Date,
-    public BookedTo: Date
+    public bookedTo: Date
   ) {}
 }

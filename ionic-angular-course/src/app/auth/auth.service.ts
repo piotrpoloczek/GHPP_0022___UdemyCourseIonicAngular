@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+
+import { environment } from '../../environments/environment';
 import { User } from './user.model';
-import { delay, map, tap } from 'rxjs/operators';
 
 export interface AuthResponseData {
   kind: string;
@@ -24,7 +25,7 @@ export class AuthService {
   get userIsAuthenticated() {
     return this._user.asObservable().pipe(
       map(user => {
-        if (user){
+        if (user) {
           return !!user.token;
         } else {
           return false;
@@ -32,35 +33,41 @@ export class AuthService {
       })
     );
   }
+
   get userId() {
-    return this._user.asObservable().pipe(map(user => {
-      if (user) {
-        return user.id;
-      } else {
-        return null;
-      }
-    }));
+    return this._user.asObservable().pipe(
+      map(user => {
+        if (user) {
+          return user.id;
+        } else {
+          return null;
+        }
+      })
+    );
   }
 
   constructor(private http: HttpClient) {}
 
   signup(email: string, password: string) {
-    return this.http.post<AuthResponseData>(
-      `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${
-        environment.firebaseApiKey
-      }`,
-      { email: email, password: password, returnSecureToken: true }
-    ).pipe(tap(this.setUserData.bind(this)));
+    return this.http
+      .post<AuthResponseData>(
+        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${
+          environment.firebaseApiKey
+        }`,
+        { email: email, password: password, returnSecureToken: true }
+      )
+      .pipe(tap(this.setUserData.bind(this)));
   }
 
   login(email: string, password: string) {
-    return this.http.post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${
-        environment.firebaseApiKey
-      }`,
-      { email: email, password: password, returnSecureToken: true }
-    )
-    .pipe(tap(this.setUserData.bind(this)));
+    return this.http
+      .post<AuthResponseData>(
+        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${
+          environment.firebaseApiKey
+        }`,
+        { email: email, password: password }
+      )
+      .pipe(tap(this.setUserData.bind(this)));
   }
 
   logout() {
@@ -68,14 +75,16 @@ export class AuthService {
   }
 
   private setUserData(userData: AuthResponseData) {
-      const exporationDate = new Date(new Date().getTime() + +userData.expiresIn * 1000);
-      this._user.next(
-        new User(
-          userData.email,
-          userData.localId,
-          userData.idToken,
-          exporationDate
-          )
-        );
+    const expirationTime = new Date(
+      new Date().getTime() + +userData.expiresIn * 1000
+    );
+    this._user.next(
+      new User(
+        userData.localId,
+        userData.email,
+        userData.idToken,
+        expirationTime
+      )
+    );
   }
 }
