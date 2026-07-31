@@ -100,7 +100,7 @@ export class AuthService {
         `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${
           environment.firebaseAPIKey
         }`,
-        { email: email, password: password }
+        { email: email, password: password, returnSecureToken: true }
       )
       .pipe(tap(this.setUserData.bind(this)));
   }
