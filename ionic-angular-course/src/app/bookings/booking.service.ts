@@ -99,6 +99,7 @@ export class BookingService {
         }"`
       )
       .pipe(
+        take(1),
         map(bookingData => {
           const bookings = [];
           for (const key in bookingData) {
